@@ -1,26 +1,24 @@
-<%- include('../partials/header', { title: 'Sign up' }) %>
-<div class="card auth">
-  <h1>Create a new account</h1>
-  <% if (error) { %><div class="error-box"><%= error %></div><% } %>
+<%- include('../partials/header.ejs') %>
+<div class="box small">
+  <h1>Sign Up</h1>
   <form action="/auth/sign-up" method="POST">
-    <label for="name">Full name</label>
-    <input type="text" name="name" id="name" value="<%= form.name || '' %>" required />
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" required />
     <label for="email">Email</label>
-    <input type="email" name="email" id="email" value="<%= form.email || '' %>" required />
+    <input type="email" name="email" id="email" required />
     <label for="orgUnit">Organizational unit</label>
     <select name="orgUnit" id="orgUnit">
-      <option value="">— none —</option>
-      <% units.forEach(u => { %>
-        <option value="<%= u._id %>" <%= String(form.orgUnit) === String(u._id) ? 'selected' : '' %>><%= u.name %> (<%= u.type %>)</option>
+      <option value="">-- none --</option>
+      <% units.forEach((unit) => { %>
+        <option value="<%= unit._id %>"><%= unit.name %></option>
       <% }) %>
     </select>
     <label for="password">Password</label>
-    <input type="password" name="password" id="password" minlength="6" required />
-    <label for="confirmPassword">Confirm password</label>
+    <input type="password" name="password" id="password" required />
+    <label for="confirmPassword">Confirm Password</label>
     <input type="password" name="confirmPassword" id="confirmPassword" required />
-    <p class="muted" style="font-size:.85rem">New accounts get the <b>User</b> role. The first account ever created becomes <b>Admin</b>.</p>
-    <div class="actions"><button type="submit">Sign up</button>
-      <a href="/auth/sign-in">Already have an account?</a></div>
+    <br /><br />
+    <button type="submit">Sign Up</button>
   </form>
 </div>
-<%- include('../partials/footer') %>
+<%- include('../partials/footer.ejs') %>

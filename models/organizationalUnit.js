@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 
-// ORGANIZATIONAL_UNITS: id, name, type, parent_unit_id
 const organizationalUnitSchema = mongoose.Schema({
-  name: { type: String, required: true, trim: true },
-  type: { type: String, trim: true, default: 'Department' },
-  parentUnit: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'OrganizationalUnit',
-    default: null,
-  },
+  name: { type: String, required: true },
+  type: { type: String },
+  parentUnit: { type: mongoose.Schema.Types.ObjectId, ref: 'OrganizationalUnit' },
 });
 
-module.exports = mongoose.model('OrganizationalUnit', organizationalUnitSchema);
+const OrganizationalUnit = mongoose.model('OrganizationalUnit', organizationalUnitSchema);
+
+module.exports = OrganizationalUnit;

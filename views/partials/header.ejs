@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Inventory</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/assets">Assets</a>
+    <% if (user) { %>
+      <a href="/transfers">Transfers</a>
+      <a href="/units">Units</a>
+      <% if (user.role === 'Admin') { %>
+        <a href="/users">Users</a>
+      <% } %>
+      <span><a href="/auth/sign-out">Sign out</a></span>
+      <span><%= user.name %> (<%= user.role %>)</span>
+    <% } else { %>
+      <span><a href="/auth/sign-up">Sign up</a></span>
+      <span><a href="/auth/sign-in">Sign in</a></span>
+      <span>Guest</span>
+    <% } %>
+  </nav>
+  <main>
