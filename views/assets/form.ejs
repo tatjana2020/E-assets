@@ -1,0 +1,66 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="box">
+  <% if (asset._id) { %>
+    <h1>Edit asset</h1>
+    <form action="/assets/<%= asset._id %>?_method=PUT" method="POST">
+  <% } else { %>
+    <h1>New asset</h1>
+    <form action="/assets" method="POST">
+  <% } %>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" value="<%= asset.name || '' %>" required />
+
+    <label for="category">Category</label>
+    <input type="text" name="category" id="category" list="categories" value="<%= asset.category || '' %>" required />
+    <datalist id="categories">
+      <% categories.forEach((c) => { %>
+        <option value="<%= c %>">
+      <% }) %>
+    </datalist>
+
+    <label for="inventoryNumber">Inventory number-must be unique</label>
+    <input type="text" name="inventoryNumber" id="inventoryNumber" value="<%= asset.inventoryNumber || '' %>" required />
+
+    <label for="serialNumber">Serial number-must be unique</label>
+    <input type="text" name="serialNumber" id="serialNumber" value="<%= asset.serialNumber || '' %>" />
+
+    <label for="description">Description/specification</label>
+    <textarea name="description" id="description"><%= asset.description || '' %></textarea>
+
+    <label for="status">Status</label>
+    <select name="status" id="status">
+      <% ['Active', 'Service', 'Out of service'].forEach((s) => { %>
+        <option <%= asset.status === s ? 'selected' : '' %>><%= s %></option>
+      <% }) %>
+    </select>
+
+    <label for="purchaseDate">Purchase date</label>
+    <input type="date" name="purchaseDate" id="purchaseDate"
+      value="<%= asset.purchaseDate ? asset.purchaseDate.toISOString().slice(0, 10) : '' %>" />
+
+    <label for="purchaseValue">Purchase value</label>
+    <input type="number" step="0.01" name="purchaseValue" id="purchaseValue" value="<%= asset.purchaseValue || '' %>" />
+
+    <label for="estimatedLifeYears">Estimated life in years</label>
+    <input type="number" step="0.5" name="estimatedLifeYears" id="estimatedLifeYears" value="<%= asset.estimatedLifeYears || '' %>" />
+
+    <% if (!asset._id) { %>
+      <label for="currentHolder">Current holder</label>
+      <select name="currentHolder" id="currentHolder">
+        <% users.forEach((u) => { %>
+          <option value="<%= u._id %>" <%= String(u._id) === user._id ? 'selected' : '' %>><%= u.name %></option>
+        <% }) %>
+      </select>
+    <% } else { %>
+      <p>The holder can only be changed with a transfer.</p>
+    <% } %>
+
+    <br /><br />
+    <button type="submit">Save</button>
+    <a class="button grey" href="/assets">Cancel</a>
+  </form>
+</div>
+
+<%- include('../partials/footer.ejs') %>

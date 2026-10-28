@@ -1,0 +1,68 @@
+<%- include('./partials/header.ejs') %>
+
+<% if (!user) { %>
+  <div class="box">
+    <h1>E-Asset</h1>
+    <p></p>
+    <p></p>
+    <p>This is information system for recording and monitoring of assets and material inventory by organizational units. </p> 
+    <p>It’s tracking assets, who holds them, and a transfer history, with a simple admin, user and guest roles split. </p>
+    <ul>
+      <li>Unique records. </li>
+      <li>Full control. </li>
+      <li>Reliable data.</li>
+    </ul>
+    <p>Before sign in you're browsing as a Guest. That mean that guest can view only the list of assets. But as a user you have more much more features.</p>
+    <a class="button" href="/assets">Browse assets</a>
+    <a class="button grey" href="/auth/sign-in">Sign in</a>
+    <a class="button grey" href="/auth/sign-up">Sign up</a>
+  </div>
+<% } else { %>
+  <h1>Welcome, <%= user.name %>!</h1>
+
+  <div class="stats">
+    <div><%= total %><small>All assets</small></div>
+    <div><%= active %><small>Active</small></div>
+    <div><%= service %><small>Service</small></div>
+    <div><%= outOfService %><small>Out of service</small></div>
+  </div>
+
+  <div class="box">
+    <h2>Assets I hold</h2>
+    <% if (myAssets.length === 0) { %>
+      <p>You do not hold any assets.</p>
+    <% } else { %>
+      <table>
+        <tr><th>Inventory no.</th><th>Name</th><th>Status</th></tr>
+        <% myAssets.forEach((asset) => { %>
+          <tr>
+            <td><%= asset.inventoryNumber %></td>
+            <td><a href="/assets/<%= asset._id %>"><%= asset.name %></a></td>
+            <td><%= asset.status %></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } %>
+  </div>
+
+  <div class="box">
+    <h2>Recent transfers</h2>
+    <% if (recentTransfers.length === 0) { %>
+      <p>No transfers yet.</p>
+    <% } else { %>
+      <table>
+        <tr><th>Date</th><th>Asset</th><th>From</th><th>To</th></tr>
+        <% recentTransfers.forEach((transfer) => { %>
+          <tr>
+            <td><%= transfer.transferredAt.toLocaleDateString() %></td>
+            <td><%= transfer.asset ? transfer.asset.name : '' %></td>
+            <td><%= transfer.handedOverBy.name %></td>
+            <td><%= transfer.receivedBy.name %></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } %>
+  </div>
+<% } %>
+
+<%- include('./partials/footer.ejs') %>

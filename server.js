@@ -7,7 +7,11 @@ const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
 
-// controlers
+const authController = require('./controllers/auth.js');
+const assetsController = require('./controllers/assets.js');
+const transfersController = require('./controllers/transfers.js');
+const unitsController = require('./controllers/units.js');
+const usersController = require('./controllers/users.js');
 
 const passUserToView = require('./middleware/pass-user-to-view.js');
 const Asset = require('./models/asset.js');
@@ -72,6 +76,11 @@ app.get('/', async (req, res) => {
   }
 });
 
+app.use('/auth', authController);
+app.use('/assets', assetsController);
+app.use('/transfers', transfersController);
+app.use('/units', unitsController);
+app.use('/users', usersController);
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

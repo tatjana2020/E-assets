@@ -1,0 +1,65 @@
+<%- include('../partials/header.ejs') %>
+
+<h1>Assets</h1>
+<% if (user) { %>
+  <p><a class="button" href="/assets/new"> New asset</a></p>
+<% } %>
+
+<form class="box filters" action="/assets" method="GET">
+  <div>
+    <label>Search</label>
+    <input type="text" name="search" value="<%= query.search || '' %>" placeholder="Name, serial or inventory no." />
+  </div>
+  <div>
+    <label>Status</label>
+    <select name="status">
+      <option value="">All</option>
+      <% ['Active', 'Service', 'Out of service'].forEach((s) => { %>
+        <option <%= query.status === s ? 'selected' : '' %>><%= s %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div>
+    <label>Category</label>
+    <select name="category">
+      <option value="">All</option>
+      <% categories.forEach((c) => { %>
+        <option <%= query.category === c ? 'selected' : '' %>><%= c %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div>
+    <label>Organizational unit</label>
+    <select name="unit">
+      <option value="">All</option>
+      <% units.forEach((u) => { %>
+        <option value="<%= u._id %>" <%= query.unit === String(u._id) ? 'selected' : '' %>><%= u.name %></option>
+      <% }) %>
+    </select>
+  </div>
+  <button type="submit">Filter</button>
+</form>
+
+<div class="box">
+  <% if (assets.length === 0) { %>
+    <p>No assets found.</p>
+  <% } else { %>
+    <table>
+      <tr>
+        <th>Inventory no.</th><th>Name</th><th>Category</th><th>Status</th><th>Holder</th><th>Unit</th>
+      </tr>
+      <% assets.forEach((asset) => { %>
+        <tr>
+          <td><%= asset.inventoryNumber %></td>
+          <td><a href="/assets/<%= asset._id %>"><%= asset.name %></a></td>
+          <td><%= asset.category %></td>
+          <td><%= asset.status %></td>
+          <td><%= asset.currentHolder ? asset.currentHolder.name : '' %></td>
+          <td><%= asset.currentHolder && asset.currentHolder.orgUnit ? asset.currentHolder.orgUnit.name : '' %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } %>
+</div>
+
+<%- include('../partials/footer.ejs') %>

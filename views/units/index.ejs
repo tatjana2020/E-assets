@@ -1,0 +1,34 @@
+<%- include('../partials/header.ejs') %>
+
+<h1>Organizational units</h1>
+<% if (user.role === 'Admin') { %>
+  <p><a class="button" href="/units/new">+ New unit</a></p>
+<% } %>
+
+<div class="box">
+  <% if (units.length === 0) { %>
+    <p>No units yet.</p>
+  <% } else { %>
+    <table>
+      <tr><th>Name</th><th>Type</th><th>Parent unit</th><th></th></tr>
+      <% units.forEach((unit) => { %>
+        <tr>
+          <td><a href="/assets?unit=<%= unit._id %>"><%= unit.name %></a></td>
+          <td><%= unit.type %></td>
+          <td><%= unit.parentUnit ? unit.parentUnit.name : '' %></td>
+          <td>
+            <% if (user.role === 'Admin') { %>
+              <a class="button" href="/units/<%= unit._id %>/edit">Edit</a>
+              <form class="inline" action="/units/<%= unit._id %>?_method=DELETE" method="POST">
+                <button class="red" type="submit">Delete</button>
+              </form>
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+    <p>Click on a unit name to see the assets held by its members.</p>
+  <% } %>
+</div>
+
+<%- include('../partials/footer.ejs') %>

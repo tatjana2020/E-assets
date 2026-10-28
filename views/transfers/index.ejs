@@ -1,0 +1,28 @@
+<%- include('../partials/header.ejs') %>
+
+<h1>Transfer history</h1>
+
+<div class="box">
+  <% if (transfers.length === 0) { %>
+    <p>No transfers yet.</p>
+  <% } else { %>
+    <table>
+      <tr><th>Date</th><th>Inventory no.</th><th>Asset</th><th>Handed over by</th><th>Received by</th></tr>
+      <% transfers.forEach((transfer) => { %>
+        <tr>
+          <td><%= transfer.transferredAt.toLocaleDateString() %></td>
+          <% if (transfer.asset) { %>
+            <td><%= transfer.asset.inventoryNumber %></td>
+            <td><a href="/assets/<%= transfer.asset._id %>"><%= transfer.asset.name %></a></td>
+          <% } else { %>
+            <td></td><td>(deleted)</td>
+          <% } %>
+          <td><%= transfer.handedOverBy.name %></td>
+          <td><%= transfer.receivedBy.name %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } %>
+</div>
+
+<%- include('../partials/footer.ejs') %>

@@ -1,0 +1,29 @@
+<%- include('../partials/header.ejs') %>
+
+<h1>Users</h1>
+
+<div class="box">
+  <% users.forEach((u) => { %>
+    <form class="userrow" action="/users/<%= u._id %>?_method=PUT" method="POST">
+      <span><%= u.name %> (<%= u.email %>)</span>
+      <% if (String(u._id) === user._id) { %>
+        <span>You (<%= u.role %>)</span>
+      <% } else { %>
+        <select name="role">
+          <% ['Admin', 'User'].forEach((r) => { %>
+            <option <%= u.role === r ? 'selected' : '' %>><%= r %></option>
+          <% }) %>
+        </select>
+        <select name="orgUnit">
+          <option value="">-- no unit --</option>
+          <% units.forEach((unit) => { %>
+            <option value="<%= unit._id %>" <%= u.orgUnit && String(u.orgUnit._id) === String(unit._id) ? 'selected' : '' %>><%= unit.name %></option>
+          <% }) %>
+        </select>
+        <button type="submit">Save</button>
+      <% } %>
+    </form>
+  <% }) %>
+</div>
+
+<%- include('../partials/footer.ejs') %>

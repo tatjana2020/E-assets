@@ -1,7 +1,7 @@
 # E-assets
 ### By: Tatjana Markovic
 
-#### [Portfolio](https:// ) | [GitHub](https://github.com//tatjana2020) | [LinkedIn](https:/tatjana-markovi%C4%87-b668bb44/)
+#### [Portfolio](https:// ) | [GitHub](https://github.com//tatjana2020) | [LinkedIn](https://www.linkedin.com/in/tatjana-markovi%C4%87-b668bb44/)
 #### Date: 30/10/2026
 ***
 

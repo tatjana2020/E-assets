@@ -1,0 +1,98 @@
+<%- include('../partials/header.ejs') %>
+
+<h1><%= asset.name %></h1>
+
+<div class="box">
+  <p><a class="button grey" href="/assets">Back to assets</a>
+  <% if (canEdit) { %>
+    <a class="button" href="/assets/<%= asset._id %>/edit">Edit</a>
+  <% } %>
+  <% if (user && user.role === 'Admin') { %>
+    <form class="inline" action="/assets/<%= asset._id %>?_method=DELETE" method="POST">
+      <button class="red" type="submit">Delete</button>
+    </form>
+  <% } %>
+  </p>
+
+  <p><b>Inventory number:</b> <%= asset.inventoryNumber %></p>
+  <p><b>Serial number:</b> <%= asset.serialNumber %></p>
+  <p><b>Category:</b> <%= asset.category %></p>
+  <p><b>Description:</b> <%= asset.description %></p>
+  <p><b>Status:</b> <%= asset.status %></p>
+  <p><b>Purchase date:</b> <%= asset.purchaseDate ? asset.purchaseDate.toLocaleDateString() : '' %></p>
+  <p><b>Purchase value:</b> <%= asset.purchaseValue %></p>
+  <p><b>Estimated life (years):</b> <%= asset.estimatedLifeYears %></p>
+  <p><b>Current holder:</b> <%= asset.currentHolder ? asset.currentHolder.name : '' %>
+    <% if (asset.currentHolder && asset.currentHolder.orgUnit) { %>
+      (<%= asset.currentHolder.orgUnit.name %>)
+    <% } %>
+  </p>
+  <p><b>Created by:</b> <%= asset.createdBy ? asset.createdBy.name : '' %></p>
+</div>
+
+<div class="box">
+  <h2>Images</h2>
+  <% if (images.length === 0) { %>
+    <p>No images.</p>
+  <% } %>
+  <div class="images">
+    <% images.forEach((image) => { %>
+      <div style="display:inline-block">
+        <img src="<%= image.imageUrl %>" alt="<%= asset.name %>" />
+        <% if (canEdit) { %>
+          <form action="/assets/<%= asset._id %>/images/<%= image._id %>?_method=DELETE" method="POST">
+            <button class="red" type="submit">Remove</button>
+          </form>
+        <% } %>
+      </div>
+    <% }) %>
+  </div>
+  <% if (canEdit) { %>
+    <form action="/assets/<%= asset._id %>/images" method="POST">
+      <label for="imageUrl">Image URL</label>
+      <input type="text" name="imageUrl" id="imageUrl" placeholder="https://..." required />
+      <br /><br />
+      <button type="submit">Add image</button>
+    </form>
+  <% } %>
+</div>
+
+<% if (canTransfer) { %>
+  <div class="box">
+    <h2>Transfer this asset</h2>
+    <form action="/transfers" method="POST">
+      <input type="hidden" name="asset" value="<%= asset._id %>" />
+      <label for="receivedBy">Hand over to</label>
+      <select name="receivedBy" id="receivedBy" required>
+        <option value="">-- choose a user --</option>
+        <% users.forEach((u) => { %>
+          <% if (String(u._id) !== String(asset.currentHolder._id)) { %>
+            <option value="<%= u._id %>"><%= u.name %></option>
+          <% } %>
+        <% }) %>
+      </select>
+      <br /><br />
+      <button type="submit">Transfer</button>
+    </form>
+  </div>
+<% } %>
+
+<div class="box">
+  <h2>Transfer history</h2>
+  <% if (transfers.length === 0) { %>
+    <p>This asset has not been transferred yet.</p>
+  <% } else { %>
+    <table>
+      <tr><th>Date</th><th>Handed over by</th><th>Received by</th></tr>
+      <% transfers.forEach((transfer) => { %>
+        <tr>
+          <td><%= transfer.transferredAt.toLocaleDateString() %></td>
+          <td><%= transfer.handedOverBy.name %></td>
+          <td><%= transfer.receivedBy.name %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } %>
+</div>
+
+<%- include('../partials/footer.ejs') %>

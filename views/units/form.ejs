@@ -1,0 +1,32 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="box small">
+  <% if (unit._id) { %>
+    <h1>Edit unit</h1>
+    <form action="/units/<%= unit._id %>?_method=PUT" method="POST">
+  <% } else { %>
+    <h1>New unit</h1>
+    <form action="/units" method="POST">
+  <% } %>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" value="<%= unit.name || '' %>" required />
+
+    <label for="type">Type (for example Company, Department, Team)</label>
+    <input type="text" name="type" id="type" value="<%= unit.type || '' %>" />
+
+    <label for="parentUnit">Parent unit</label>
+    <select name="parentUnit" id="parentUnit">
+      <option value="">-- none --</option>
+      <% units.forEach((u) => { %>
+        <option value="<%= u._id %>" <%= String(unit.parentUnit) === String(u._id) ? 'selected' : '' %>><%= u.name %></option>
+      <% }) %>
+    </select>
+
+    <br /><br />
+    <button type="submit">Save</button>
+    <a class="button grey" href="/units">Cancel</a>
+  </form>
+</div>
+
+<%- include('../partials/footer.ejs') %>
