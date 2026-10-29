@@ -48,7 +48,7 @@ E-ASSETS is an aplication for inventory, designed to record and monitor inventor
 
 ### ***Deploy***
 
-![Trello](https://trello.com/b/NTTbIEeP/recording-and-tracking-inventory)
+[Trello](https://trello.com/b/NTTbIEeP/recording-and-tracking-inventory)
 
 
 ### ***Screenshots***
