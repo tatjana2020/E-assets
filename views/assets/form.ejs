@@ -20,13 +20,13 @@
       <% }) %>
     </datalist>
 
-    <label for="inventoryNumber">Inventory number-must be unique</label>
+    <label for="inventoryNumber">Inventory number (must be unique)</label>
     <input type="text" name="inventoryNumber" id="inventoryNumber" value="<%= asset.inventoryNumber || '' %>" required />
 
-    <label for="serialNumber">Serial number-must be unique</label>
+    <label for="serialNumber">Serial number (must be unique)</label>
     <input type="text" name="serialNumber" id="serialNumber" value="<%= asset.serialNumber || '' %>" />
 
-    <label for="description">Description/specification</label>
+    <label for="description">Description / specification</label>
     <textarea name="description" id="description"><%= asset.description || '' %></textarea>
 
     <label for="status">Status</label>
@@ -36,9 +36,6 @@
       <% }) %>
     </select>
 
-    <label for="donor">Donor</label>
-    <input type="text" name="donor" id="donor" value="<%= asset.donor || '' %>" />
-
     <label for="purchaseDate">Purchase date</label>
     <input type="date" name="purchaseDate" id="purchaseDate"
       value="<%= asset.purchaseDate ? asset.purchaseDate.toISOString().slice(0, 10) : '' %>" />
@@ -46,7 +43,10 @@
     <label for="purchaseValue">Purchase value</label>
     <input type="number" step="0.01" name="purchaseValue" id="purchaseValue" value="<%= asset.purchaseValue || '' %>" />
 
-    <label for="estimatedLifeYears">Estimated life in years</label>
+    <label for="donor">Donor (leave empty if the asset was purchased)</label>
+    <input type="text" name="donor" id="donor" value="<%= asset.donor || '' %>" />
+
+    <label for="estimatedLifeYears">Estimated life (years)</label>
     <input type="number" step="0.5" name="estimatedLifeYears" id="estimatedLifeYears" value="<%= asset.estimatedLifeYears || '' %>" />
 
     <% if (!asset._id) { %>

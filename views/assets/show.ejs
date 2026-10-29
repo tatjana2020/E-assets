@@ -19,9 +19,9 @@
   <p><b>Category:</b> <%= asset.category %></p>
   <p><b>Description:</b> <%= asset.description %></p>
   <p><b>Status:</b> <%= asset.status %></p>
-  <p><b>Donor:</b> <%= asset.donor %></p>
   <p><b>Purchase date:</b> <%= asset.purchaseDate ? asset.purchaseDate.toLocaleDateString() : '' %></p>
   <p><b>Purchase value:</b> <%= asset.purchaseValue %></p>
+  <p><b>Donor:</b> <%= asset.donor %></p>
   <p><b>Estimated life (years):</b> <%= asset.estimatedLifeYears %></p>
   <p><b>Current holder:</b> <%= asset.currentHolder ? asset.currentHolder.name : '' %>
     <% if (asset.currentHolder && asset.currentHolder.orgUnit) { %>
@@ -49,11 +49,11 @@
     <% }) %>
   </div>
   <% if (canEdit) { %>
-    <form action="/assets/<%= asset._id %>/images" method="POST">
-      <label for="imageUrl">Image URL</label>
-      <input type="text" name="imageUrl" id="imageUrl" placeholder="https://..." required />
+    <form action="/assets/<%= asset._id %>/images" method="POST" enctype="multipart/form-data">
+      <label for="image">Upload a picture (max 5 MB)</label>
+      <input type="file" name="image" id="image" accept="image/*" required />
       <br /><br />
-      <button type="submit">Add image</button>
+      <button type="submit">Upload image</button>
     </form>
   <% } %>
 </div>

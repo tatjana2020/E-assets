@@ -51,7 +51,7 @@ router.post('/sign-up', async (req, res) => {
     }
 
     // hash the password before sending to the database
-    const hashedPassword = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     req.body.password = hashedPassword;
 
     await User.create(req.body);
