@@ -1,8 +1,9 @@
-const dns = require("node:dns/promises");
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
+// const dns = require("node:dns/promises");
+// dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const dotenv = require('dotenv');
 dotenv.config();
+const path = require("path");
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -20,13 +21,16 @@ const passUserToView = require('./middleware/pass-user-to-view.js');
 const Asset = require('./models/asset.js');
 const Transfer = require('./models/transfer.js');
 
-const port = process.env.PORT ? process.env.PORT : '3000';
+// const port = process.env.PORT ? process.env.PORT : '3000';
 
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
@@ -85,6 +89,7 @@ app.use('/transfers', transfersController);
 app.use('/units', unitsController);
 app.use('/users', usersController);
 
-app.listen(port, () => {
-  console.log(`The express app is ready on port ${port}!`);
-});
+// app.listen(port, () => {
+//   console.log(`The express app is ready on port ${port}!`);
+// });
+module.exports = app;
