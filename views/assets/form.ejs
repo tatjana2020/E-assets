@@ -36,6 +36,9 @@
       <% }) %>
     </select>
 
+    <label for="donor">Donor</label>
+    <input type="text" name="donor" id="donor" value="<%= asset.donor || '' %>" />
+
     <label for="purchaseDate">Purchase date</label>
     <input type="date" name="purchaseDate" id="purchaseDate"
       value="<%= asset.purchaseDate ? asset.purchaseDate.toISOString().slice(0, 10) : '' %>" />

@@ -11,6 +11,7 @@ const assetSchema = mongoose.Schema({
     enum: ['Active', 'Service', 'Out of service'],
     default: 'Active',
   },
+  donor: { type: String},
   purchaseDate: { type: Date },
   purchaseValue: { type: Number },
   estimatedLifeYears: { type: Number },
