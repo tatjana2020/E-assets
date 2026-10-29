@@ -17,6 +17,8 @@ E-ASSETS is an aplication for inventory, designed to record and monitor inventor
 * HTML
 * CSS
 * GitHub
+* Trello
+* Vercel
 
 ***
 
@@ -43,10 +45,23 @@ E-ASSETS is an aplication for inventory, designed to record and monitor inventor
 * Asset age analytics: introduce asset age analysis and reporting.
 * Dark mode: add a dark mode option for improved user experience.
 * Automated testing: implement automated tests to improve reliability and maintainability.
-***
+
+### ***Deploy***
+
+![Trello](https://trello.com/b/NTTbIEeP/recording-and-tracking-inventory)
+
 
 ### ***Screenshots***
-![First_Page](Start.jpg)
+
+![First_Page](./public/images/Screenshot1.png)
+
+![List_of_assets_Page](./public/images/Screenshot2.png)
+
+![User_look_Page](./public/images/Screenshot3.png)
+
+![Admin_Unit_Page](./public/images/Screenshot4.png)
+
+![Admin_Assets_Page](./public/images/Screenshot5.png)
 
 ### ***Credits***
 #### Support and Help: 
